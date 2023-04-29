@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { LayoutModule } from "./layout/layout.module";
 import { CartModule } from "./features/cart/cart.module";
 import { ProductModule } from "./features/product/product.module";
 import { AuthModule } from "./features/auth/auth.module";
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    LayoutModule,
     CartModule,
     ProductModule,
     AuthModule

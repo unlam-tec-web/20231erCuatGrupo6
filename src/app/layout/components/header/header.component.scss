@@ -1,0 +1,38 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: .5rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.icons-container {
+  display: flex;
+  column-gap: 1.5rem;
+}
+
+.search-bar-container {
+  width: 100%;
+}
+
+.cart-icon-container {
+  position: relative;
+
+  .product-count {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.2rem;
+    width: 1.2rem;
+    top: 0;
+    right: -10px;
+    z-index: 1111;
+    background-color: #8B0000;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 50%;
+  }
+}

@@ -1,0 +1,20 @@
+<nav>
+  <div>
+    <img ngSrc="assets/images/logo.svg" height="50" width="50" priority/>
+  </div>
+
+  <div class="icons-container">
+    <img class="nav-bar-icon" ngSrc="assets/images/user.svg" height="50" width="30"/>
+
+    <div class="cart-icon-container">
+      <div class="product-count" *ngIf="productsInCart > 0">{{productsInCart}}</div>
+      <img class="nav-bar-icon" ngSrc="assets/images/shopping-cart.svg" height="50" width="30"/>
+    </div>
+
+
+  </div>
+
+  <div class="search-bar-container">
+    <app-search-bar (productAddedEvent)="onProductAdded()"/>
+  </div>
+</nav>
