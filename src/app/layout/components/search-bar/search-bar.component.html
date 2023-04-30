@@ -1,0 +1,29 @@
+<div class="search-bar-container">
+
+
+  <form class="search-bar">
+    <div class="search-bar-wrapper">
+      <input (input)="onProductSearch($event)" placeholder="Buscar producto..." autocomplete="off">
+    </div>
+  </form>
+
+
+  <div class="search-results" *ngIf="products.length > 0">
+    <ul>
+      <li *ngFor="let product of products" class="search-results-item">
+        <div class="item-top">
+          <h3>{{ product.name }}</h3>
+          <span>{{ product.price | currency }}</span>
+        </div>
+
+        <div class="add-to-cart-btn-container">
+          <button (click)="addProductToCart(product)" class="add-to-cart-btn">
+            AÑADIR
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+</div>
