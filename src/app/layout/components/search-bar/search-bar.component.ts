@@ -31,7 +31,7 @@ export class SearchBarComponent {
 
   private getProductsToRender(searchTerm: string): Product[] {
     return searchTerm
-        ? this.productService.findProductsByName(searchTerm)
-        : []
+      ? this.productService.findProductsByName(searchTerm)
+      : []
   }
 }

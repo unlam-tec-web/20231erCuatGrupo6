@@ -3,12 +3,12 @@
     <img ngSrc="assets/images/logo.svg" height="50" width="50" priority/>
   </div>
 
-    <div class="cart-icon-container">
-      <div class="product-count" *ngIf="productsInCart > 0">{{productsInCart}}</div>
-      <img class="nav-bar-icon" ngSrc="assets/images/shopping-cart.svg" height="50" width="30"/>
-    </div>
+  <div class="cart-icon-container">
+    <div class="product-count" *ngIf="productsInCart > 0">{{productsInCart}}</div>
+    <img class="nav-bar-icon" ngSrc="assets/images/shopping-cart.svg" height="50" width="30"/>
+  </div>
 
-  <div class="search-bar-container">
+  <div class="search-bar-wrapper ">
     <app-search-bar (productAddedEvent)="onProductAdded()"/>
   </div>
 </nav>

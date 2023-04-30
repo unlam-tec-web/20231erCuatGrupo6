@@ -15,13 +15,14 @@ nav {
   }
 }
 
-.search-bar-container {
+.search-bar-wrapper {
   width: 100%;
 
   @media screen and (min-width: 1024px) {
     width: 35%;
   }
 }
+
 
 .cart-icon-container {
   position: relative;
