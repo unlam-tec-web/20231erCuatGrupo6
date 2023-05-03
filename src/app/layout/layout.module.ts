@@ -8,10 +8,11 @@ import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterOutlet } from "@angular/router";
+import { SiteLayoutComponent } from './components/site-layout/site-layout.component';
 
 @NgModule({
-	imports: [CommonModule, NgOptimizedImage, RouterLink],
+  imports: [CommonModule, NgOptimizedImage, RouterLink, RouterOutlet],
   exports: [
     HeaderComponent,
     FooterComponent
@@ -19,7 +20,8 @@ import { RouterLink } from "@angular/router";
   declarations: [
     HeaderComponent,
     FooterComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SiteLayoutComponent
   ]
 })
 export class LayoutModule {
