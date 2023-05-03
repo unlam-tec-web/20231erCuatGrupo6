@@ -1,7 +1,7 @@
 <h1>Listado de Productos</h1>
 <mat-divider></mat-divider>
 
-<div class="grid bm-8 pt-4">
+<div class="grid mr-0 bm-8 pt-4">
     <div *ngFor="let product of productos"
         class="col-12 sm:col-4 md:col-3 xl:col-2">
         <mat-card>
@@ -27,7 +27,8 @@
         
                 <span class="spacer"></span>
         
-                <button mat-button mat-raised>
+                <button mat-button mat-raised
+                [routerLink]="[ '/product', product.id ]">
                     <mat-icon>more_horiz</mat-icon>
                     Más
                 </button>

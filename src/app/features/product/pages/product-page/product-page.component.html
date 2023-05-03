@@ -1,0 +1,38 @@
+    <div class="col-12 mt-5 md:col-10 md:col-offset-1 md:mt-5">
+ 
+        <mat-card class="md:pb-8 md:px-8">
+            <mat-card-header>
+                <mat-card-title>{{product.name}}</mat-card-title>
+                <mat-card-subtitle>{{product.category}}</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-divider></mat-divider>
+
+            <div class="flex flex-row justify-content-around flex-wrap">
+                
+                <img [src]="product | productImage" [alt]="product.name">
+
+                <div class="info">
+                    <mat-card-header>
+                        <mat-card-title>Descripción</mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content class="mt-2">
+                        {{product.description}}
+                    </mat-card-content>
+
+                    <mat-card-header>
+                        <mat-card-subtitle>Precio: {{product.price | currency}}</mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" class="w-full">
+                        <mat-icon>shopping_cart_checkout</mat-icon>
+                            Añadir
+                        </button>  
+                     </mat-card-actions>
+                     
+                </div>
+            </div>
+        </mat-card>
+    </div>
