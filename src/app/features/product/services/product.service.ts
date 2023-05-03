@@ -17,7 +17,7 @@ export class ProductService {
   private getFakeProducts(): Product[] {
     return [
       { id: 1, category: "Comida", name: 'Alcohol', description: "bla bla bla", price: 2500 },
-      { id: 2, category: "Comida", name: 'Pan Tostado', description: "bla bla bla bla bla bla", price: 4300 }
+      { id: 2, category: "Comida", name: 'Tostada', description: "bla bla bla bla bla bla", price: 4300 }
     ]
   }
 }
