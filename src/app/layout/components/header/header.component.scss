@@ -23,29 +23,35 @@ nav {
   }
 }
 
-
-.cart-icon-container {
-  position: relative;
+.icons-container {
+  display: flex;
+  column-gap: 1.25rem;
+  align-items: center;
 
   @media screen and (min-width: 1024px) {
+    column-gap: 3rem;
     order: 3;
     margin-left: auto;
   }
 }
 
-.product-count {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.2rem;
-  width: 1.2rem;
-  top: 0;
-  right: -10px;
-  z-index: 1111;
-  background-color: #8B0000;
-  color: white;
-  font-weight: 600;
-  font-size: 12px;
-  border-radius: 50%;
+.cart-icon-container {
+  position: relative;
+
+  .product-count {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.2rem;
+    width: 1.2rem;
+    top: 0;
+    right: -10px;
+    z-index: 1111;
+    background-color: #8B0000;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 50%;
+  }
 }
