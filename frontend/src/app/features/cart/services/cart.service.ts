@@ -3,9 +3,7 @@ import { Product } from "../../product";
 import { CartItem } from "../types/cart-item";
 import { STORAGE_KEYS } from "../../../shared/constants";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CartService {
   private items: CartItem[]
 
@@ -17,10 +15,11 @@ export class CartService {
     return this.items.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0)
   }
 
-  public addProductToCart(product: Product) {
-    const isProductAlreadyInCart = this.items.some(item => item.product.id === product.id)
+  public addProductToCart(product: Product): CartItem[] {
+    const isProductAlreadyInCart = this.items.some(item => this.isProductInCart(product, item))
 
-    this.items = isProductAlreadyInCart ? this.updateItemQuantity(product.id) : this.addItem(product)
+    this.items = isProductAlreadyInCart ? this.updateItemQuantity(product) : this.addItem(product)
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
     return this.items
   }
@@ -29,10 +28,14 @@ export class CartService {
     return [...this.items, { quantity: 1, product }]
   }
 
-  private updateItemQuantity(productId: number): CartItem[] {
-    return this.items.map(item => item.product.id === productId
+  private updateItemQuantity(product: Product): CartItem[] {
+    return this.items.map(item => this.isProductInCart(product, item)
       ? { ...item, quantity: item.quantity + 1 }
       : item
     )
+  }
+
+  private isProductInCart(product: Product, item: CartItem): boolean {
+    return product.id === item.product.id
   }
 }

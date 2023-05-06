@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from "../../../features/product";
 import { CartService } from "../../../features/cart/services/cart.service";
-import { STORAGE_KEYS } from "../../../shared/constants";
 
 @Component({
   selector: 'app-header',
@@ -18,9 +17,7 @@ export class HeaderComponent {
   }
 
   public onProductAdded(productToAdd: Product): void {
-    const items = this.cartService.addProductToCart(productToAdd)
+    this.cartService.addProductToCart(productToAdd)
     this.productsCounter = this.cartService.getProductQuantityInCart()
-
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(items))
   }
 }
