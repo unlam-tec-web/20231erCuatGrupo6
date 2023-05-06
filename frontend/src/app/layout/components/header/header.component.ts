@@ -1,32 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Product } from "../../../features/product";
-
-export enum STORAGE_KEYS {
-  PRODUCT_COUNTER = 'PRODUCT_COUNTER'
-}
+import { CartService } from "../../../features/cart/services/cart.service";
+import { STORAGE_KEYS } from "../../../shared/constants";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-  protected productsCounter!: number
+export class HeaderComponent {
+  private readonly cartService: CartService
+  protected productsCounter: number
 
-  public ngOnInit(): void {
-    const countInStorage = localStorage.getItem(STORAGE_KEYS.PRODUCT_COUNTER)
-
-    this.productsCounter = countInStorage ? parseInt(countInStorage) : 0
+  constructor(cartService: CartService) {
+    this.cartService = cartService
+    this.productsCounter = this.cartService.getProductQuantityInCart()
   }
 
   public onProductAdded(productToAdd: Product): void {
-    this.updateCounter()
+    const items = this.cartService.addProductToCart(productToAdd)
+    this.productsCounter = this.cartService.getProductQuantityInCart()
 
-    // TODO: Logica para añadirlo a una pagina de pedido.
-  }
-
-  private updateCounter(): void {
-    this.productsCounter += 1
-    localStorage.setItem(STORAGE_KEYS.PRODUCT_COUNTER, JSON.stringify(this.productsCounter))
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(items))
   }
 }
