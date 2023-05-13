@@ -1,1 +1,45 @@
-<p>login works!</p>
+<mat-card>
+  <div class="section-form">
+    <mat-card-header>
+      <mat-card-title>Ingresar</mat-card-title>
+      <p>
+        ¿Todavía no tenés cuenta?
+        <button (click)="register()">Crear cuenta</button>
+      </p>
+    </mat-card-header>
+
+    <form [formGroup]="loginForm">
+      <div class="form">
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput formControlName="email" required />
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
+            >El correo electrónico es requerido</mat-error
+          >
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')"
+            >El correo electrónico no es válido</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" type="password" required />
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            La contraseña es requerida
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')"
+            >La contraseña debe tener al menos 8 caracteres</mat-error
+          >
+          <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')"
+            >La contraseña debe contener al menos una letra minúscula, una letra
+            mayúscula, un número y un carácter especial</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="login()">
+        Ingresar
+      </button>
+    </form>
+  </div>
+</mat-card>
