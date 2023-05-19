@@ -17,7 +17,7 @@ export class HeaderComponent {
   }
 
   public onProductAdded(productToAdd: Product): void {
-    this.cartService.addProductToCart(productToAdd)
+    this.cartService.addProduct(productToAdd)
     this.productsCounter = this.cartService.getProductQuantityInCart()
   }
 }

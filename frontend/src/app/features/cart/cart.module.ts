@@ -6,9 +6,10 @@ import { CommonModule } from "@angular/common";
 
 // Components
 import { OrderComponent } from './pages/order/order.component';
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   declarations: [
     OrderComponent
   ]
