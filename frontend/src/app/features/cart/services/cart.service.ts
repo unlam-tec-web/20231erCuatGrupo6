@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { catchError, tap } from "rxjs";
+import { BehaviorSubject, catchError, tap } from "rxjs";
 
 import { STORAGE_KEYS } from "../../../shared/constants";
 import { environment } from "../../../../environments/environment.local";
@@ -11,10 +11,21 @@ import { CartItem } from "../types/cart-item";
 export class CartService {
   private readonly httpClient: HttpClient
   private items: CartItem[]
+  private cartItemsCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  cartItemsCount$ = this.cartItemsCountSubject.asObservable();
+
 
   constructor(httpClient: HttpClient) {
     this.httpClient = httpClient
     this.items = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS_IN_CART) || "[]")
+  }
+
+  loadCartItems(): void {
+    const storedCartItems = localStorage.getItem(STORAGE_KEYS.PRODUCTS_IN_CART);
+    if (storedCartItems) {
+      this.items = JSON.parse(storedCartItems);
+      this.updateCartItemsCount();
+    }
   }
 
   public getProductQuantityInCart(): number {
@@ -31,6 +42,8 @@ export class CartService {
     this.items = isProductAlreadyInCart ? this.addItemQuantity(product) : this.addItem(product)
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
+    this.updateCartItemsCount();
+
     return this.items
   }
 
@@ -39,6 +52,11 @@ export class CartService {
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
     return this.items;
+  }
+
+  private updateCartItemsCount(): void {
+    const count = this.getProductQuantityInCart();
+    this.cartItemsCountSubject.next(count);
   }
 
   public checkout(): void {

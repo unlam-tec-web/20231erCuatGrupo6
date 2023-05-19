@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from "../../../features/product";
 import { CartService } from "../../../features/cart/services/cart.service";
 
@@ -7,7 +7,7 @@ import { CartService } from "../../../features/cart/services/cart.service";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private readonly cartService: CartService
   protected productsCounter: number
 
@@ -16,8 +16,17 @@ export class HeaderComponent {
     this.productsCounter = this.cartService.getProductQuantityInCart()
   }
 
+  ngOnInit(): void {
+    this.cartService.loadCartItems();
+
+    this.cartService.cartItemsCount$.subscribe(count => {
+      this.productsCounter = count;
+    });
+  }
+
+
+
   public onProductAdded(productToAdd: Product): void {
     this.cartService.addProduct(productToAdd)
-    this.productsCounter = this.cartService.getProductQuantityInCart()
   }
 }
