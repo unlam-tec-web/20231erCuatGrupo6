@@ -36,15 +36,16 @@ export class CartService {
     return this.items.reduce((total, item) => total + item.product.price * item.quantity , 0)
   }
 
-  public addProduct(product: Product): CartItem[] {
+  public addProduct(product: Product, quantity?: number): void {
     const isProductAlreadyInCart = this.items.some(item => this.isProductInCart(product, item))
 
     this.items = isProductAlreadyInCart ? this.addItemQuantity(product) : this.addItem(product)
+
+    this.items = quantity != null ? this.addDefinedItemQuantity(product,quantity) : this.items;
+
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
     this.updateCartItemsCount();
-
-    return this.items
   }
 
   public removeProduct(product: Product): CartItem[] {
@@ -75,6 +76,13 @@ export class CartService {
   private addItemQuantity(product: Product): CartItem[] {
     return this.items.map(item => this.isProductInCart(product, item)
       ? { ...item, quantity: item.quantity + 1 }
+      : item
+    )
+  }
+
+  private addDefinedItemQuantity(product: Product, quantity: number): CartItem[] {
+    return this.items.map(item => this.isProductInCart(product, item)
+      ? { ...item, quantity: item.quantity + quantity-1 }
       : item
     )
   }
