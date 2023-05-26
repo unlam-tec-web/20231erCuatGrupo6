@@ -9,6 +9,25 @@ export class ProductRepository {
 		this.#connection = getDatabaseConnection()
 	}
 
+	public getProductById(id: number): Promise<Product> {
+		const queryToGetProduct = `
+		SELECT p.*, pt.name as category 
+		FROM product p JOIN product_type pt on pt.id = p.product_type_id
+		WHERE p.id = ?
+		`
+
+		return new Promise((res, reject) => {
+			this.#connection.execute(queryToGetProduct, [id], (err, rows: RowDataPacket[]) => {
+				if (err) {
+					reject(err)
+					return
+				}
+
+				res(this.#mapRowsToProduct(rows)[0])
+			})
+		})
+	}
+
 	public getProducts(): Promise<Product[]> {
 		const queryToGetProducts = `SELECT p.*, pt.name as category FROM product p JOIN product_type pt on pt.id = p.product_type_id;`
 

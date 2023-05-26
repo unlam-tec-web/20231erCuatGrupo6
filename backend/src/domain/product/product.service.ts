@@ -11,4 +11,9 @@ export class ProductService {
 	public getProducts(): Promise<Product[]> {
 		return this.#productRepository.getProducts()
 	}
+
+	public getProductById(productId: number): Promise<Product> {
+		return this.#productRepository.getProductById(productId)
+
+	}
 }
