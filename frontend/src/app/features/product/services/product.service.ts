@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Product } from "../types/product.interface";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { PRODUCT_ROUTES } from "../product.routes";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  public findAllProducts(): Product[] {
-    return this.getFakeProducts()
+  readonly httpClient: HttpClient
+
+  constructor(httpClient: HttpClient) {
+    this.httpClient = httpClient
+  }
+
+  public findAllProducts(): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(PRODUCT_ROUTES.getProducts)
   }
 
   public findProductsByName(name: string): Product[] {
@@ -14,18 +23,10 @@ export class ProductService {
       .filter(product => product.name.toLowerCase().includes(name))
   }
 
-  public findProductsById(id: number): Product {
+  public findProductsById(id: number): Observable<Product> {
+    const url = `${PRODUCT_ROUTES.getProducts}/${id}`
 
-    var product!: Product;
-    
-    this.getFakeProducts().forEach(produc => {
-      if(produc.id == id ){
-        product =  produc;
-      }
-    });
-    
-    return product;
-    
+    return this.httpClient.get<Product>(url)
   }
 
   private getFakeProducts(): Product[] {

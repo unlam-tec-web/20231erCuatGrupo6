@@ -2,26 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../types/product.interface';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../../cart/services/cart.service';
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-list-product',
   templateUrl: './list-product.component.html',
   styleUrls: ['./list-product.component.scss']
 })
-export class ListProductComponent implements OnInit{
+export class ListProductComponent implements OnInit {
+  public products!: Observable<Product[]>
 
-  public productos!: Product[]
-
-  constructor(private productService : ProductService,
-    private cartService: CartService){}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    this.productos = this.productService.findAllProducts();
+    this.products = this.productService.findAllProducts();
   }
 
-  addProduct(product: Product){
+  addProduct(product: Product) {
     this.cartService.addProduct(product);
   }
-
-
 }

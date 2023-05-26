@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7f09144-6a8c-4f00-b348-15cdd6bda8c4" name="Changes" comment="Separo entre carpetas front y back">
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/cart/services/cart.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/cart/services/cart.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/layout/components/header/header.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/layout/components/header/header.component.ts" afterDir="false" />
+    <list default="true" id="b7f09144-6a8c-4f00-b348-15cdd6bda8c4" name="Changes" comment="Se añade endpoint">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/product/pages/product-page/product-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/product/pages/product-page/product-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/product/pages/product-page/product-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/product/pages/product-page/product-page.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/product/services/product.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/product/services/product.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,22 +32,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;recuperar-contrasenia&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/u633558/Desktop/eccommerce/backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\u633558\\Desktop\\eccommerce\\frontend\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "create-backend",
+    "last_opened_file_path": "C:/Users/u633558/Desktop/eccommerce/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "ts.external.directory.path": "C:\\Users\\u633558\\Desktop\\eccommerce\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\u633558\Desktop\eccommerce\backend" />
@@ -102,6 +104,7 @@
       <workItem from="1684006106740" duration="2457000" />
       <workItem from="1684078460842" duration="3564000" />
       <workItem from="1684108128848" duration="4913000" />
+      <workItem from="1685111907222" duration="15050000" />
     </task>
     <task id="LOCAL-00001" summary="separo logica y añado parametro">
       <created>1683036081576</created>
@@ -117,7 +120,21 @@
       <option name="project" value="LOCAL" />
       <updated>1683203188645</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Se añade gitignore">
+      <created>1685126185471</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1685126185471</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Se añade endpoint">
+      <created>1685127161884</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1685127161884</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +154,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="separo logica y añado parametro" />
     <MESSAGE value="Separo entre carpetas front y back" />
-    <option name="LAST_COMMIT_MESSAGE" value="Separo entre carpetas front y back" />
+    <MESSAGE value="Se añade gitignore" />
+    <MESSAGE value="Se añade endpoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="Se añade endpoint" />
   </component>
 </project>
