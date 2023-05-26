@@ -23,18 +23,10 @@ export class ProductService {
       .filter(product => product.name.toLowerCase().includes(name))
   }
 
-  public findProductsById(id: number): Product {
+  public findProductsById(id: number): Observable<Product> {
+    const url = `${PRODUCT_ROUTES.getProducts}/${id}`
 
-    var product!: Product;
-
-    this.getFakeProducts().forEach(produc => {
-      if(produc.id == id ){
-        product =  produc;
-      }
-    });
-
-    return product;
-
+    return this.httpClient.get<Product>(url)
   }
 
   private getFakeProducts(): Product[] {

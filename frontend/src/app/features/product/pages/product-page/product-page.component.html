@@ -1,45 +1,45 @@
-    <div class="col-12 mt-5 md:col-10 md:col-offset-1 md:mt-5">
- 
-        <mat-card class="md:pb-8 md:px-8">
-            <mat-card-header>
-                <mat-card-title>{{product.name}}</mat-card-title>
-                <mat-card-subtitle>{{product.category}}</mat-card-subtitle>
-            </mat-card-header>
+<div *ngIf="product$ | async as product" class="col-12 mt-5 md:col-10 md:col-offset-1 md:mt-5">
 
-            <mat-divider></mat-divider>
+  <mat-card class="md:pb-8 md:px-8">
+    <mat-card-header>
+      <mat-card-title>{{product.name}}</mat-card-title>
+      <mat-card-subtitle>{{product.category}}</mat-card-subtitle>
+    </mat-card-header>
 
-            <div class="flex flex-row justify-content-around flex-wrap">
-                
-                <img [src]="product | productImage" [alt]="product.name">
+    <mat-divider></mat-divider>
 
-                <div class="info">
-                    <mat-card-header>
-                        <mat-card-title>Precio: {{product.price | currency}}</mat-card-title>
-                        <mat-card-subtitle>Descripción</mat-card-subtitle>
-                    </mat-card-header>
+    <div class="flex flex-row justify-content-around flex-wrap">
 
-                    <mat-card-content class="mt-2">
-                        {{product.description}}
-                    </mat-card-content>
+      <img [src]="product | productImage" [alt]="product.name">
 
-                    <mat-card-actions>
-                        <button mat-raised-button color="primary" (click)="remove()">
-                            <mat-icon>remove</mat-icon>
-                        </button>
-                        <span class="flex justify-content-center w-6">{{quantity}}</span>
-                        <button mat-raised-button color="primary" (click)="add()">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                     </mat-card-actions>
+      <div class="info">
+        <mat-card-header>
+          <mat-card-title>Precio: {{product.price | currency}}</mat-card-title>
+          <mat-card-subtitle>Descripción</mat-card-subtitle>
+        </mat-card-header>
 
-                     <mat-card-actions>
-                        <button mat-raised-button color="primary" class="w-full" (click)="addProduct(product,quantity)">
-                            <mat-icon>shopping_cart_checkout</mat-icon>
-                                Añadir
-                        </button>  
-                    </mat-card-actions>
+        <mat-card-content class="mt-2">
+          {{product.description}}
+        </mat-card-content>
 
-                </div>
-            </div>
-        </mat-card>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="remove()">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="flex justify-content-center w-6">{{quantity}}</span>
+          <button mat-raised-button color="primary" (click)="add()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-card-actions>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" class="w-full" (click)="addProduct(product,quantity)">
+            <mat-icon>shopping_cart_checkout</mat-icon>
+            Añadir
+          </button>
+        </mat-card-actions>
+
+      </div>
     </div>
+  </mat-card>
+</div>

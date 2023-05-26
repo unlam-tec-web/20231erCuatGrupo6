@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from '../../types/product.interface';
 import { ProductService } from '../../services/product.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap,tap } from 'rxjs';
-import { __param } from 'tslib';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 import { CartService } from '../../../cart/services/cart.service';
 
 @Component({
@@ -11,35 +10,32 @@ import { CartService } from '../../../cart/services/cart.service';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.scss']
 })
-export class ProductPageComponent {
-  public product!: Product;
-  public quantity: number = 1;
+export class ProductPageComponent implements OnInit {
+  public product$!: Observable<Product>;
+  public quantity = 1;
 
   constructor(
     private productService: ProductService,
     private activatedRouter: ActivatedRoute,
-    private cartService: CartService,
-    ){}
+    private cartService: CartService
+  ) {
+  }
 
   ngOnInit(): void {
-
-    this.activatedRouter.params
-    .subscribe(({id}) => {
-      this.product = this.productService.findProductsById(id);
-      }
+    this.product$ = this.activatedRouter.params.pipe(
+      switchMap(({ id }) => this.productService.findProductsById(id))
     );
   }
 
-  add(){
+  add() {
     this.quantity += 1;
   }
 
-  remove(){
+  remove() {
     this.quantity > 1 ? this.quantity -= 1 : this.quantity;
   }
 
-  addProduct(product: Product, quantity: number){
+  addProduct(product: Product, quantity: number) {
     this.cartService.addProduct(product, quantity);
   }
-
 }
