@@ -12,7 +12,7 @@ import { CartService } from '../../../cart/services/cart.service';
 })
 export class ProductPageComponent implements OnInit {
   public product$!: Observable<Product>;
-  public quantity = 1;
+  public quantity: number=1;
 
   constructor(
     private productService: ProductService,

@@ -5,7 +5,7 @@ import { BehaviorSubject, catchError, tap } from "rxjs";
 import { STORAGE_KEYS } from "../../../shared/constants";
 import { environment } from "../../../../environments/environment.local";
 import { Product } from "../../product";
-import { CartItem } from "../types/cart-item";
+import { CartItem } from '../types/cart-item';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -13,11 +13,15 @@ export class CartService {
   private items: CartItem[]
   private cartItemsCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   cartItemsCount$ = this.cartItemsCountSubject.asObservable();
+  
+  private cartQuantityProductSubject : BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>([]);
+  cartQuantityProduct$ = this.cartQuantityProductSubject.asObservable();
 
 
   constructor(httpClient: HttpClient) {
     this.httpClient = httpClient
     this.items = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS_IN_CART) || "[]")
+    this.cartQuantityProductSubject.next(this.items);
   }
 
   loadCartItems(): void {
@@ -32,10 +36,12 @@ export class CartService {
     return this.items.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0)
   }
 
+  
   public calculateTotalCost (): number {
     return this.items.reduce((total, item) => total + item.product.price * item.quantity , 0)
   }
 
+  //TODO revisar
   public addProduct(product: Product, quantity?: number): void {
     const isProductAlreadyInCart = this.items.some(item => this.isProductInCart(product, item))
 
@@ -46,10 +52,18 @@ export class CartService {
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
     this.updateCartItemsCount();
+
+    this.cartQuantityProductSubject.next(this.items);
+
   }
 
   public removeProduct(product: Product): CartItem[] {
-    this.items = this.removeItemQuantity(product)
+    this.items = this.removeItemQuantity(product)  
+    
+    this.cartQuantityProductSubject.next(this.items);
+
+    this.updateCartItemsCount();
+     
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
     return this.items;
@@ -87,12 +101,23 @@ export class CartService {
     )
   }
 
+  //TODO Mejorar codigo para que no se borre el producto cuando resto a 0, sino con un boton eliminar
   private removeItemQuantity(product: Product): CartItem[] {
-    return this.items.map(item => this.isProductInCart(product, item)
-      ? { ...item, quantity: item.quantity - 1 }
-      : item
-    )
-      .filter(item => item.quantity === 0)
+  
+    return this.items.map(item => {
+      if (this.isProductInCart(product, item) ) {
+        if(item.quantity <= 1 ){
+          return item;
+          }
+      return {
+          ...item,
+          quantity: item.quantity - 1
+        };
+      } else {
+        return item;
+      }
+    });
+   
   }
 
   private isProductInCart(product: Product, item: CartItem): boolean {
