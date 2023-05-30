@@ -73,22 +73,14 @@ export class CartService {
   }
 
 
-  //TODO Mejorar codigo para que no se borre el producto cuando resto a 0, sino con un boton eliminar
-  private removeItemQuantity(product: Product): CartItem[] {
+  //TODO Mejorar codigo para que no se borre el producto cuando resto a 0, sino con un boton eliminar o dar un aviso
   
-    return this.items.map(item => {
-      if (this.isProductInCart(product, item) ) {
-        if(item.quantity <= 1 ){
-          return item;
-          }
-      return {
-          ...item,
-          quantity: item.quantity - 1
-        };
-      } else {
-        return item;
-      }
-    });
+  private removeItemQuantity(product: Product): CartItem[] {
+    return this.items.map(item => this.isProductInCart(product, item)
+    ? { ...item, quantity: item.quantity - 1 }
+    : item
+  )
+    .filter(item => item.quantity >= 1)
    
   }
 
