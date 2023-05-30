@@ -9,27 +9,50 @@ export class ProductRepository {
 		this.#connection = getDatabaseConnection()
 	}
 
-	public getProductById(id: number): Promise<Product> {
-		const queryToGetProduct = `
-		SELECT p.*, pt.name as category 
-		FROM product p JOIN product_type pt on pt.id = p.product_type_id
-		WHERE p.id = ?
+	public getProductById(id: number): Promise<Product | null> {
+		const queryToGetProductById = `
+			SELECT p.*, pt.name as category 
+			FROM product p JOIN product_type pt on pt.id = p.product_type_id
+			WHERE p.id = ?
 		`
 
 		return new Promise((res, reject) => {
-			this.#connection.execute(queryToGetProduct, [id], (err, rows: RowDataPacket[]) => {
+			this.#connection.execute(queryToGetProductById, [id], (err, rows: RowDataPacket[]) => {
 				if (err) {
 					reject(err)
 					return
 				}
 
-				res(this.#mapRowsToProduct(rows)[0])
+				res(rows.length ? this.#mapRowsToProduct(rows)[0] : null)
+			})
+		})
+	}
+
+	public getProductsBySearchTerm(searchTerm: string): Promise<Product[]> {
+		const queryToGetProducts = `
+			SELECT p.*, pt.name as category 
+			FROM product p JOIN product_type pt on pt.id = p.product_type_id
+			WHERE p.name LIKE ? OR p.description LIKE ? OR pt.name LIKE ?
+		`
+		const queryValues = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`]
+
+		return new Promise((res, reject) => {
+			this.#connection.execute(queryToGetProducts, queryValues, (err, rows: RowDataPacket[]) => {
+				if (err) {
+					reject(err)
+					return
+				}
+
+				res(this.#mapRowsToProduct(rows))
 			})
 		})
 	}
 
 	public getProducts(): Promise<Product[]> {
-		const queryToGetProducts = `SELECT p.*, pt.name as category FROM product p JOIN product_type pt on pt.id = p.product_type_id;`
+		const queryToGetProducts = `
+			SELECT p.*, pt.name as category 
+			FROM product p JOIN product_type pt on pt.id = p.product_type_id;
+		`
 
 		return new Promise((res, reject) => {
 			this.#connection.query(queryToGetProducts, (err, rows: RowDataPacket[]) => {
