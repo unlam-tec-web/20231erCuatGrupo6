@@ -11,6 +11,7 @@ import { CartItem } from '../types/cart-item';
 export class CartService {
   private readonly httpClient: HttpClient
   private items: CartItem[]
+  
   private cartItemsCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   cartItemsCount$ = this.cartItemsCountSubject.asObservable();
   
@@ -41,13 +42,10 @@ export class CartService {
     return this.items.reduce((total, item) => total + item.product.price * item.quantity , 0)
   }
 
-  //TODO revisar
-  public addProduct(product: Product, quantity?: number): void {
+  public addProduct(product: Product, quantity: number=1): void {
     const isProductAlreadyInCart = this.items.some(item => this.isProductInCart(product, item))
 
-    this.items = isProductAlreadyInCart ? this.addItemQuantity(product) : this.addItem(product)
-
-    this.items = quantity != null ? this.addDefinedItemQuantity(product,quantity) : this.items;
+    this.items = isProductAlreadyInCart ? this.addItemQuantity(product,quantity) : this.addItem(product,quantity)
 
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
@@ -83,23 +81,17 @@ export class CartService {
       .subscribe()
   }
 
-  private addItem(product: Product): CartItem[] {
-    return [...this.items, { quantity: 1, product }]
+  private addItem(product: Product, quantity: number): CartItem[] {
+    return [...this.items, { quantity , product }]
   }
 
-  private addItemQuantity(product: Product): CartItem[] {
+  private addItemQuantity(product: Product, quantity: number): CartItem[] {
     return this.items.map(item => this.isProductInCart(product, item)
-      ? { ...item, quantity: item.quantity + 1 }
+      ? { ...item, quantity: item.quantity + quantity }
       : item
     )
   }
 
-  private addDefinedItemQuantity(product: Product, quantity: number): CartItem[] {
-    return this.items.map(item => this.isProductInCart(product, item)
-      ? { ...item, quantity: item.quantity + quantity-1 }
-      : item
-    )
-  }
 
   //TODO Mejorar codigo para que no se borre el producto cuando resto a 0, sino con un boton eliminar
   private removeItemQuantity(product: Product): CartItem[] {
