@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Product, ProductService } from "../../../features/product";
+import { Observable, of } from "rxjs";
 
 @Component({
   selector: 'app-search-bar',
@@ -7,13 +8,13 @@ import { Product, ProductService } from "../../../features/product";
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
-  protected products: Product[]
+  protected products: Observable<Product[]>
   private readonly productService: ProductService
   @Output()
   private readonly productAddedEvent: EventEmitter<Product>
 
   constructor(productService: ProductService) {
-    this.products = []
+    this.products = of([])
     this.productService = productService
     this.productAddedEvent = new EventEmitter<Product>()
   }
@@ -29,9 +30,9 @@ export class SearchBarComponent {
     this.products = this.getProductsToRender(productName)
   }
 
-  private getProductsToRender(searchTerm: string): Product[] {
+  private getProductsToRender(searchTerm: string): Observable<Product[]> {
     return searchTerm
-      ? this.productService.findProductsByName(searchTerm)
-      : []
+      ? this.productService.findProductsBySearchTerm(searchTerm)
+      : of([])
   }
 }

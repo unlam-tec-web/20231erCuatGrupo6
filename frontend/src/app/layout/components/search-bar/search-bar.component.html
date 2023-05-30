@@ -8,9 +8,9 @@
   </form>
 
 
-  <div class="search-results" *ngIf="products.length > 0">
+  <div class="search-results" *ngIf="products | async">
     <ul>
-      <li *ngFor="let product of products" class="search-results-item">
+      <li *ngFor="let product of products | async" class="search-results-item">
         <div class="item-top">
           <h3>{{ product.name }}</h3>
           <span>{{ product.price | currency }}</span>

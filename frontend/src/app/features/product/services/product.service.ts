@@ -18,21 +18,15 @@ export class ProductService {
     return this.httpClient.get<Product[]>(PRODUCT_ROUTES.getProducts)
   }
 
-  public findProductsByName(name: string): Product[] {
-    return this.getFakeProducts()
-      .filter(product => product.name.toLowerCase().includes(name))
+  public findProductsBySearchTerm(searchTerm: string): Observable<Product[]> {
+    const url = `${PRODUCT_ROUTES.getProducts}/?searchTerm=${searchTerm}`
+
+    return this.httpClient.get<Product[]>(url)
   }
 
   public findProductsById(id: number): Observable<Product> {
     const url = `${PRODUCT_ROUTES.getProducts}/${id}`
 
     return this.httpClient.get<Product>(url)
-  }
-
-  private getFakeProducts(): Product[] {
-    return [
-      { id: 1, category: "Farmacia", name: 'Alcohol', description: "bla bla bla", price: 2500 },
-      { id: 2, category: "Comida", name: 'Tostada', description: "bla bla bla bla bla bla", price: 4300 }
-    ]
   }
 }
