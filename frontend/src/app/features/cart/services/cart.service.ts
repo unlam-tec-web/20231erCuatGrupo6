@@ -12,9 +12,6 @@ export class CartService {
   private readonly httpClient: HttpClient
   private items: CartItem[]
   
-  private cartItemsCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  cartItemsCount$ = this.cartItemsCountSubject.asObservable();
-  
   private cartQuantityProductSubject : BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>([]);
   cartQuantityProduct$ = this.cartQuantityProductSubject.asObservable();
 
@@ -25,19 +22,10 @@ export class CartService {
     this.cartQuantityProductSubject.next(this.items);
   }
 
-  loadCartItems(): void {
-    const storedCartItems = localStorage.getItem(STORAGE_KEYS.PRODUCTS_IN_CART);
-    if (storedCartItems) {
-      this.items = JSON.parse(storedCartItems);
-      this.updateCartItemsCount();
-    }
+  public getProductQuantityInCart(items: CartItem[]): number {
+    return items.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0)
   }
 
-  public getProductQuantityInCart(): number {
-    return this.items.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0)
-  }
-
-  
   public calculateTotalCost (): number {
     return this.items.reduce((total, item) => total + item.product.price * item.quantity , 0)
   }
@@ -47,11 +35,9 @@ export class CartService {
 
     this.items = isProductAlreadyInCart ? this.addItemQuantity(product,quantity) : this.addItem(product,quantity)
 
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
-
-    this.updateCartItemsCount();
-
     this.cartQuantityProductSubject.next(this.items);
+
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
   }
 
@@ -59,18 +45,12 @@ export class CartService {
     this.items = this.removeItemQuantity(product)  
     
     this.cartQuantityProductSubject.next(this.items);
-
-    this.updateCartItemsCount();
      
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
     return this.items;
   }
 
-  private updateCartItemsCount(): void {
-    const count = this.getProductQuantityInCart();
-    this.cartItemsCountSubject.next(count);
-  }
 
   public checkout(): void {
     this.httpClient.post(environment.checkoutUrl, { items: this.items })
