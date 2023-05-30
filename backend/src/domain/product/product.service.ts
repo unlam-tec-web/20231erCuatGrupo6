@@ -8,12 +8,14 @@ export class ProductService {
 		this.#productRepository = new ProductRepository()
 	}
 
-	public getProducts(): Promise<Product[]> {
+	public getProducts(searchTerm: string | undefined): Promise<Product[]> {
+		if (searchTerm)
+			return this.#productRepository.getProductsBySearchTerm(searchTerm)
+
 		return this.#productRepository.getProducts()
 	}
 
-	public getProductById(productId: number): Promise<Product> {
+	public getProductById(productId: number): Promise<Product | null> {
 		return this.#productRepository.getProductById(productId)
-
 	}
 }

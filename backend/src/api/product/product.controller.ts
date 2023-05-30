@@ -8,8 +8,8 @@ export class ProductController {
 		this.#productService = new ProductService()
 	}
 
-	public getProducts(req: Request, res: Response): void {
-		this.#productService.getProducts()
+	public getProducts(req: Request<{}, {}, {}, { searchTerm?: string }>, res: Response): void {
+		this.#productService.getProducts(req.query.searchTerm)
 			.then(products => res.status(200).send(products))
 			.catch(err => {
 				console.error(`Error found ${err.message}`)
@@ -19,6 +19,11 @@ export class ProductController {
 
 	public getProductById(req: Request<{ productId: string }>, res: Response): void {
 		const parsedId = parseInt(req.params.productId)
+
+		if (Number.isNaN(parsedId)) {
+			res.status(400).send({ error: "The id must be a number." })
+			return
+		}
 
 		this.#productService.getProductById(parsedId)
 			.then(product => {
