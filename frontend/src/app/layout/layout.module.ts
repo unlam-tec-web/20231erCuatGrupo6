@@ -15,13 +15,13 @@ import { SiteLayoutComponent } from './components/site-layout/site-layout.compon
   imports: [CommonModule, NgOptimizedImage, RouterLink, RouterOutlet],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ],
   declarations: [
     HeaderComponent,
     FooterComponent,
     SearchBarComponent,
-    SiteLayoutComponent
+    SiteLayoutComponent,
   ]
 })
 export class LayoutModule {

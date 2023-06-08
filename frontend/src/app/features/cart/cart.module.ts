@@ -6,12 +6,14 @@ import { CommonModule } from "@angular/common";
 
 // Components
 import { HttpClientModule } from "@angular/common/http";
+import { MaterialModule } from '../../material/material.module';
+import { OrderComponent } from './pages/order/order.component';
+import { RouterModule } from '@angular/router';
+import { PipeModule } from '../product/pipe/pipe.module';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
-  declarations: [
-    
-  ],
+  declarations: [OrderComponent ],
+  imports: [CommonModule, HttpClientModule,MaterialModule,PipeModule,RouterModule],
 })
 export class CartModule {
 }

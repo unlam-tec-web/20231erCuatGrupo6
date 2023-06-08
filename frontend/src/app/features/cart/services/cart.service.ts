@@ -26,8 +26,8 @@ export class CartService {
     return items.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0)
   }
 
-  public calculateTotalCost (): number {
-    return this.items.reduce((total, item) => total + item.product.price * item.quantity , 0)
+  public calculateTotalCost (items: CartItem[]): number {
+    return items.reduce((total, item) => total + item.product.price * item.quantity , 0)
   }
 
   public addProduct(product: Product, quantity: number=1): void {
@@ -46,6 +46,17 @@ export class CartService {
     
     this.cartQuantityProductSubject.next(this.items);
      
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
+
+    return this.items;
+  }
+
+  public removeTotalProduct(product: Product): CartItem[]{
+
+    this.items = this.filter(product);
+    
+    this.cartQuantityProductSubject.next(this.items);
+
     localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
 
     return this.items;
@@ -82,6 +93,10 @@ export class CartService {
   )
     .filter(item => item.quantity >= 1)
    
+  }
+
+  private filter(prodcut: Product): CartItem[]{
+    return this.items.filter(item => item.product.id != prodcut.id);
   }
 
   private isProductInCart(product: Product, item: CartItem): boolean {

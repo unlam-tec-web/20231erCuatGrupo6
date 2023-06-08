@@ -1,38 +1,27 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, OnInit, AfterViewInit,ViewChild } from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { CartItem } from '../../types/cart-item';
-import { MaterialModule } from '../../../../material/material.module';
 import { Product } from '../../../product/types/product.interface';
+import { CartItem } from '../../types/cart-item';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss'],
-  standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, CurrencyPipe,MaterialModule],
 
 })
-export class OrderComponent implements OnInit, AfterViewInit {
+export class OrderComponent implements OnInit {
   
-  displayedColumns: string[] = ['product', 'quantity', 'subtotal'];
-  dataSource!: MatTableDataSource<CartItem>;
-
-  @ViewChild(MatPaginator)paginator!: MatPaginator;
+  cartItems?: CartItem[];
+  total: number = 0;
   
   constructor(private cartService: CartService){
 
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
-
   ngOnInit(): void {
     this.cartService.cartQuantityProduct$.subscribe( items => {
-      this.dataSource= new MatTableDataSource<CartItem>(items);
+      this.cartItems=items;
+      this.total = this.cartService.calculateTotalCost(items);
     });
 
   }
@@ -43,6 +32,10 @@ export class OrderComponent implements OnInit, AfterViewInit {
 
   add(item:Product){
     this.cartService.addProduct(item);
+  }
+
+  removeAll(item:Product){
+    this.cartService.removeTotalProduct(item);
   }
 
 }
