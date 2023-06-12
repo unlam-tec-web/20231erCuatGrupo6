@@ -1,6 +1,8 @@
 import { Component , Input , OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../../services/login.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,8 +10,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  error!: string;
 
-  constructor(private formBuilder: FormBuilder,private router: Router) { }
+  constructor(private formBuilder: FormBuilder,private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -27,11 +30,17 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (this.loginForm.valid) {
-      this.router.navigate(['/']);
-    } else {
-      console.log('error')
-    }
+    if(this.loginForm.invalid) return;
+    this.loginService.login(this.loginForm.value)
+      .then(() => this.router.navigate(['/']))
+      .catch((error) => {
+        console.error(error);
+        this.error = 'Usuario no encontrado'; // Asignar el mensaje de error a la propiedad
+      });
+  }
+
+  hideError(): void {
+    this.error = ''; // Restablecer el valor del error
   }
 
   register(): void {
