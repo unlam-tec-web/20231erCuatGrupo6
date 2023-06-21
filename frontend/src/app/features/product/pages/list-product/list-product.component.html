@@ -5,8 +5,8 @@
         <div *ngFor="let product of products | async"
             class="col-12 sm:col-4 md:col-3 xl:col-2">
             <mat-card>
-            <!--TODO: imagen -->
-            <img mat-card-image [src]="product | productImage" [alt]="product.name">
+
+            <img mat-card-image [src]="product.image" [alt]="product.name">
 
                 <mat-card-header>
                     <mat-card-title>{{product.name}}</mat-card-title>
