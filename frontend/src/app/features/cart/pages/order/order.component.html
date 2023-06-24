@@ -3,8 +3,8 @@
     <div *ngFor="let item of cartItems" class="border-top-1 border-black-alpha-10">
       <mat-icon class="flex w-full justify-content-end md:hidden" (click)="removeAll(item.product)">close</mat-icon>
         <div class="flex align-items-center flex-wrap gap-5 mt-2">
-          
-                <img [src]="item.product | productImage">
+
+                <img [src]="item.product.image">
                 <div class="w-3">
                   <div>
                     <strong>{{item.product.name}}</strong>
@@ -21,7 +21,7 @@
                 <button mat-mini-fab color="primary" (click)="add(item.product)">
                   <mat-icon>add</mat-icon>
                 </button>
-              </mat-card-actions>  
+              </mat-card-actions>
 
                 <p class="m-0 w-1">{{item.product.price * item.quantity | currency}}</p>
                 <mat-icon class="hidden md:block " (click)="removeAll(item.product)">delete</mat-icon>
