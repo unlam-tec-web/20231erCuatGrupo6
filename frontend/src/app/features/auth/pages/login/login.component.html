@@ -12,34 +12,23 @@
       <div class="form">
         <mat-form-field appearance="outline">
           <mat-label>Correo electrónico</mat-label>
-          <input matInput formControlName="email" required />
-          <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
-            >El correo electrónico es requerido</mat-error
-          >
-          <mat-error *ngIf="loginForm.get('email')?.hasError('email')"
-            >El correo electrónico no es válido</mat-error
-          >
+          <input matInput formControlName="email" required (focus)="hideError()" />
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">El correo electrónico es requerido</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">El correo electrónico no es válido</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Contraseña</mat-label>
-          <input matInput formControlName="password" type="password" required />
-          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-            La contraseña es requerida
-          </mat-error>
-          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')"
-            >La contraseña debe tener al menos 8 caracteres</mat-error
-          >
-          <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')"
-            >La contraseña debe contener al menos una letra minúscula, una letra
-            mayúscula, un número y un carácter especial</mat-error
-          >
+          <input matInput formControlName="password" type="password" required (focus)="hideError()" />
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">La contraseña es requerida</mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">La contraseña debe tener al menos 8 caracteres</mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')">La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial</mat-error>
         </mat-form-field>
+        
+        <mat-error *ngIf="error" class="error-message">{{ error }}</mat-error>
       </div>
 
-      <button mat-raised-button color="primary" (click)="login()">
-        Ingresar
-      </button>
+      <button mat-raised-button color="primary" (click)="login()">Ingresar</button>
     </form>
   </div>
 </mat-card>
