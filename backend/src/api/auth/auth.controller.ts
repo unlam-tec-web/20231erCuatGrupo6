@@ -1,41 +1,39 @@
-import { Request, Response } from "express";
-import { AuthService } from "../../domain/auth";
+import { Request, Response } from 'express'
+
+import { AuthService } from '../../domain/auth'
 
 export class AuthController {
-  readonly #authService: AuthService;
+	readonly #authService: AuthService
 
-  constructor() {
-    this.#authService = new AuthService();
-  }
+	constructor() {
+		this.#authService = new AuthService()
+	}
 
-  public login(req: Request, res: Response): void {
-    const {email, password} = req.body;
+	public login(req: Request, res: Response): void {
+		const { email, password } = req.body
 
+		this.#authService
+			.login(email, password)
+			.then(userIsLogged => {
+				if (!userIsLogged) {
+					res.status(401).send('Credenciales invalidas')
+				}
 
-    Promise.resolve(this.#authService.login(email, password))
-      .then((user) => {
-        if (!user) {
-          res.status(401).send({ message: "Usuario no encontrado" });
-          return;
-        }
+				res.sendStatus(201)
+			})
+			.catch(err => {
+				console.error(`Error found ${err.message}`)
+				res.status(500).send({ error: 'Error getting user by id.' })
+			})
+	}
 
-        res.status(200).send({ user });
-      })
-      .catch((err) => {
-        console.error(`Error found ${err.message}`);
-        res.status(500).send({ error: "Error getting user by id." });
-      });
-  }
-
-  // public register(req: Request, res: Response): void {
-  //     const { email, password } = req.body
-  //     const user = this.#loginService.register(email, password)
-
-  //     if (!user) {
-  //         res.status(401).send({ message: "Invalid credentials" })
-  //         return
-  //     }
-
-  //     res.status(200).send({ user })
-  // }
+	public register(req: Request, res: Response): void {
+		this.#authService
+			.register(req.body)
+			.then(() => res.sendStatus(201))
+			.catch(err => {
+				console.error(`Error found ${err.message}`)
+				res.status(500).send({ error: 'Error getting user by id.' })
+			})
+	}
 }
