@@ -11,4 +11,5 @@ export class CartController {
 	public getUserCart(req: Request<{ userId: string }>, res: Response): void {}
 
 	public addProduct(req: Request<{ userId: string }>, res: Response): void {}
+	
 }
