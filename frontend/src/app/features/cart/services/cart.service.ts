@@ -64,7 +64,14 @@ export class CartService {
 
 
   public checkout(): void {
-    this.httpClient.post(environment.checkoutUrl, { items: this.items })
+    const userId = 1;
+
+    const requestBody = {
+    id: userId,
+    items: this.items
+    };
+    
+    this.httpClient.post(environment.checkoutUrl, requestBody)
       .pipe(
         catchError(() => this.items), // Falta notificar al usuario en caso de error.
         tap( () => this.clear())
@@ -105,6 +112,10 @@ export class CartService {
 
   private clear(): void {
     this.items = []
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
+
+    this.cartQuantityProductSubject.next(this.items);
+
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items));
+
   }
 }

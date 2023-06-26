@@ -38,4 +38,8 @@ export class OrderComponent implements OnInit {
     this.cartService.removeTotalProduct(item);
   }
 
+  checkout() {
+    this.cartService.checkout();
+  }
+
 }

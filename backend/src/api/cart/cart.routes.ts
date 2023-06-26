@@ -8,4 +8,5 @@ export function useCartRoutes(app: Application) {
 
 	app.get(`/${endpointPrefix}/user/:userId`, (req, res) => controller.getUserCart(req, res))
 	app.post(`/${endpointPrefix}/user/:userId`, (req, res) => controller.addProduct(req, res))
+	app.post(`/checkout`, (req,res) => controller.saveCheckout(req,res))
 }
