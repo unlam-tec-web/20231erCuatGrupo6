@@ -166,6 +166,7 @@ export class AuthRepository {
       );
     });
   }
+  
   #mapRowsToUser(rows: RowDataPacket[]): User[] {
     return rows.map((row) => ({
       id: row.id,

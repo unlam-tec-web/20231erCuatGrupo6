@@ -20,8 +20,8 @@ const routes: Routes = [{
 },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'confirm/:confirmationCode', component: VerifyEmailComponent },
   { path: '**', redirectTo: '' },
-  { path: 'confirm/:confirmationCode', component: VerifyEmailComponent }
 ];
 
 @NgModule({

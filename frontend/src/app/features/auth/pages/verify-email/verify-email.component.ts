@@ -22,7 +22,9 @@ export class VerifyEmailComponent {
     console.log(this.confirmationCode);
     //llamar al servicio para verificar el codigo
     this.loginService.verifyUser(this.confirmationCode).then(() => {
-      this.router.navigate(['/login']);
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 5000);
     });
   }
 }

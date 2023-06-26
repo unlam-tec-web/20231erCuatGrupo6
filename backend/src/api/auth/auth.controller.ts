@@ -77,9 +77,9 @@ export class AuthController {
     res.status(200).send({ message: "Usuario creado correctamente" });
   }
 
-  public async verifyUser(req: Request, res: Response): Promise<void> {
-    const { code } = req.body;
-    const user = await this.#authService.findUserByConfirmationCode(code);
+  public async verifyUser(req: Request<{ confirmationCode: string }>, res: Response): Promise<void> {
+    const user = await this.#authService.findUserByConfirmationCode(req.params.confirmationCode);
+    console.log(user);
     if (!user) {
       res.status(401).send({ message: "Código de confirmación no válido." });
       return;
