@@ -13,7 +13,7 @@ export class CartController {
 
 	public addProduct(req: Request<{ userId: string }>, res: Response): void {}
 
-	public saveCheckout(req: Request, res: Response) {
+	public saveCheckout(req: Request, res: Response):void {
 
 		const { id, items } = req.body;		
 
@@ -25,7 +25,7 @@ export class CartController {
 				.then(() => res.status(200).send({message:'Compra realizada con exito'}))
 				.catch(err => {
 					console.error(`Error found ${err.message}`)
-					res.status(500).send({ error: 'Error.' })
+					res.status(500).send({ error: 'Error al finalizar compra' })
 				})
 		  })
 		  .catch((error) => {

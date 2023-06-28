@@ -17,19 +17,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.cartService.loadCartItems();*/
-
-   /* this.cartService.cartItemsCount$.subscribe(count => {
-      this.productsCounter = count;
-    });*/
-
    this.cartService.cartQuantityProduct$.subscribe( items => {
       this.productsCounter = this.cartService.getProductQuantityInCart(items);
     })
 
   }
-
-
 
   public onProductAdded(productToAdd: Product): void {
     this.cartService.addProduct(productToAdd)
