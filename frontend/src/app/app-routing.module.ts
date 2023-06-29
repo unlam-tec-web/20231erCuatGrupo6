@@ -7,6 +7,7 @@ import { OrderComponent } from "./features/cart/pages/order/order.component";
 import { LoginComponent } from "./features/auth/pages/login/login.component";
 import { RegisterComponent } from "./features/auth/pages/register/register.component";
 import { ProductPageComponent } from './features/product/pages/product-page/product-page.component';
+import { VerifyEmailComponent } from './features/auth/pages/verify-email/verify-email.component';
 
 const routes: Routes = [{
   path:'',
@@ -19,7 +20,8 @@ const routes: Routes = [{
 },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', redirectTo: '' }
+  { path: 'confirm/:confirmationCode', component: VerifyEmailComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

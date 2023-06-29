@@ -1,4 +1,4 @@
-import { Component , Input , OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
@@ -12,16 +12,25 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   error!: string;
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private loginService: LoginService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
-      ]]
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+          ),
+        ],
+      ],
     });
   }
 
@@ -30,12 +39,17 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if(this.loginForm.invalid) return;
-    this.loginService.login(this.loginForm.value)
-      .then(() => this.router.navigate(['/']))
+    if (this.loginForm.invalid) return;
+    
+    this.loginService
+      .login(this.loginForm.value)
+      .then((user) => {
+        localStorage.setItem('id', JSON.stringify(user.id));
+        this.router.navigate(['/home']);
+      })
       .catch((error) => {
         console.error(error);
-        this.error = 'Usuario no encontrado'; // Asignar el mensaje de error a la propiedad
+        this.error = error.error.message; // Asignar el mensaje de error a la propiedad
       });
   }
 
@@ -46,5 +60,4 @@ export class LoginComponent implements OnInit {
   register(): void {
     this.router.navigate(['/register']);
   }
-
 }
