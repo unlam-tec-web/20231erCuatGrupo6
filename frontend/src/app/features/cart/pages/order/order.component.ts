@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../../product/types/product.interface';
 import { CartItem } from '../../types/cart-item';
+import Swal from 'sweetalert2';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-order',
@@ -11,7 +13,7 @@ import { CartItem } from '../../types/cart-item';
 })
 export class OrderComponent implements OnInit {
   
-  cartItems?: CartItem[];
+  cartItems!: CartItem[];
   total: number = 0;
   
   constructor(private cartService: CartService){
@@ -36,6 +38,25 @@ export class OrderComponent implements OnInit {
 
   removeAll(item:Product){
     this.cartService.removeTotalProduct(item);
+  }
+
+  checkout() {
+    this.cartService.checkout().then(
+      (response) => {
+        this.showModal(response);
+        this.cartService.clear();
+      })
+      .catch((error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  showModal(response:any){
+    Swal.fire({
+        icon: 'success',
+        title:  response.message,
+    }) 
   }
 
 }

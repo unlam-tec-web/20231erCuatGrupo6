@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, catchError, tap } from "rxjs";
+import { BehaviorSubject, catchError, tap, Observable } from 'rxjs';
 
 import { STORAGE_KEYS } from "../../../shared/constants";
 import { environment } from "../../../../environments/environment.local";
@@ -63,13 +63,15 @@ export class CartService {
   }
 
 
-  public checkout(): void {
-    this.httpClient.post(environment.checkoutUrl, { items: this.items })
-      .pipe(
-        catchError(() => this.items), // Falta notificar al usuario en caso de error.
-        tap( () => this.clear())
-      )
-      .subscribe()
+  public checkout(): Promise<any> {
+
+    const requestBody = {
+    id: 1,
+    items: this.items
+    };
+    
+   return this.httpClient.post(environment.checkoutUrl, requestBody).toPromise();
+
   }
 
   private addItem(product: Product, quantity: number): CartItem[] {
@@ -103,8 +105,12 @@ export class CartService {
     return product.id === item.product.id
   }
 
-  private clear(): void {
+  public clear(): void {
     this.items = []
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items))
+
+    this.cartQuantityProductSubject.next(this.items);
+
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS_IN_CART, JSON.stringify(this.items));
+
   }
 }

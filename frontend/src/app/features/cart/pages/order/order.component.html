@@ -1,3 +1,13 @@
+<div *ngIf="cartItems.length == 0; else productos" class="flex justify-content-center bg-card-order">
+  <div class="text-center">
+    <img class="mb-4" src="../../../../assets/images/shopping-bag.png">
+    <h4>¡Empieza un carrito de compras!</h4>
+    <p>Sumá productos y conseguí envío gratis.</p>
+    <button class="w-full" mat-raised-button color="primary" [routerLink]="['']">Descubrir productos</button>
+  </div>
+</div>
+
+<ng-template #productos>
 <div class="grid sm:px-4 px-2 m-0">
   <div class="col-12 lg:col-8">
     <div *ngFor="let item of cartItems" class="border-top-1 border-black-alpha-10">
@@ -14,13 +24,9 @@
 
 
               <mat-card-actions>
-                <button mat-mini-fab color="primary" (click)="remove(item.product)">
-                  <mat-icon>remove</mat-icon>
-                </button>
+                  <mat-icon (click)="remove(item.product)">remove</mat-icon>
                 <span style="width:50px;" class="text-center">{{item.quantity}}</span>
-                <button mat-mini-fab color="primary" (click)="add(item.product)">
-                  <mat-icon>add</mat-icon>
-                </button>
+                  <mat-icon (click)="add(item.product)">add</mat-icon>
               </mat-card-actions>
 
                 <p class="m-0 w-1">{{item.product.price * item.quantity | currency}}</p>
@@ -40,9 +46,10 @@
         </div>
       </mat-card-content>
 
-        <button mat-raised-button color="primary" class="mt-2">FINALIZAR COMPRA</button>
+        <button mat-raised-button color="primary" class="mt-2" (click)="checkout()">FINALIZAR COMPRA</button>
 
         <button  mat-stroked-button color="primary" class="mt-2" [routerLink]="['']">CONTINUAR COMPRANDO</button>
     </mat-card>
   </div>
 </div>
+</ng-template>
