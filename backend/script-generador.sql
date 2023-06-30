@@ -76,3 +76,8 @@ values  (1, 'Pan de Molde', 'pan rectangular. Utilizado para preparar sándwiche
         (4, 'Zanahoria', 'Una zanahoria fresca', 30.99, 3, 'http://localhost:8080/public/assets/productos/naranjas.jpg'),
         (5, 'Lechuga', 'Una lechuga fresca', 250.49, 3, 'http://localhost:8080/public/assets/productos/naranjas.jpg'),
         (6, 'Naranja', 'Una naranja llena de vitamina C', 44.89, 2, 'http://localhost:8080/public/assets/productos/naranjas.jpg');
+
+
+alter table user add column confirmationCode varchar(255);
+
+alter table user add column status boolean;

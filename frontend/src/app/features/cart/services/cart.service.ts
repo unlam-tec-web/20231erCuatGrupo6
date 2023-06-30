@@ -66,7 +66,7 @@ export class CartService {
   public checkout(): Promise<any> {
 
     const requestBody = {
-    id: 1,
+    id: JSON.parse(localStorage.getItem('id') || ''),
     items: this.items
     };
     
