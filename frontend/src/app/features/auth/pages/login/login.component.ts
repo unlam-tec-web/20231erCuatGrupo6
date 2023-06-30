@@ -1,6 +1,8 @@
-import { Component , Input , OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../../services/login.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,17 +10,27 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  error!: string;
 
-  constructor(private formBuilder: FormBuilder,private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
-      ]]
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+          ),
+        ],
+      ],
     });
   }
 
@@ -27,15 +39,25 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (this.loginForm.valid) {
-      this.router.navigate(['/']);
-    } else {
-      console.log('error')
-    }
+    if (this.loginForm.invalid) return;
+    
+    this.loginService
+      .login(this.loginForm.value)
+      .then((user) => {
+        localStorage.setItem('id', JSON.stringify(user.id));
+        this.router.navigate(['/home']);
+      })
+      .catch((error) => {
+        console.error(error);
+        this.error = error.error.message; // Asignar el mensaje de error a la propiedad
+      });
+  }
+
+  hideError(): void {
+    this.error = ''; // Restablecer el valor del error
   }
 
   register(): void {
     this.router.navigate(['/register']);
   }
-
 }

@@ -11,7 +11,8 @@ export class CartController {
 
 	public getUserCart(req: Request<{ userId: string }>, res: Response): void {}
 
-	public addProduct(req: Request<{ userId: string }>, res: Response): void {}
+	public addProduct(req: Request<{ userId: string }>, res: Response): void {}	
+}
 
 	public saveCheckout(req: Request, res: Response):void {
 
@@ -34,5 +35,4 @@ export class CartController {
 
 		}
 	}
-
 
