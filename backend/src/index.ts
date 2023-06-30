@@ -1,7 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
-import { useCartRoutes, useProductRoutes , useAuthRoutes } from "./api";
+import { useCartRoutes, useProductRoutes , useAuthRoutes, useOrderRoutes } from "./api";
 import path from "node:path";
 
 dotenv.config()
@@ -22,5 +22,6 @@ app.use('/public', express.static(staticPath));
 useProductRoutes(app)
 useCartRoutes(app)
 useAuthRoutes(app)
+useOrderRoutes(app)
 
 app.listen(port, () => console.log(`Server is running on port ${port}...`))

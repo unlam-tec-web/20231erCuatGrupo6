@@ -37,12 +37,19 @@
         <div class="flex justify-content-between">
           <p>Subtotal</p>
           <p>{{total | currency}}</p>
+          
+          <input type="number" name="" value={{total}} id="">
+          {{total | currency}}
         </div>
       </mat-card-content>
+      <form  (ngSubmit)="emitir()" >
+        <input type="text" [(ngModel)]="order.user_id" class="form-control mb-2" name="user_id" value=1 placeholder="user">
+        <input type="text" [(ngModel)]="order.total" class="form-control mb-2" name="total"value="{{total}}" >
+        <button type="submit" mat-raised-button color="primary" class="mt-2">FINALIZAR COMPRA</button>
+      </form>
 
-        <button mat-raised-button color="primary" class="mt-2">FINALIZAR COMPRA</button>
-
-        <button  mat-stroked-button color="primary" class="mt-2" [routerLink]="['']">CONTINUAR COMPRANDO</button>
+<pre>{{order | json}}</pre>
+        <button  mat-stroked-button color="primary" class="mt-2">CONTINUAR COMPRANDO</button>
     </mat-card>
   </div>
 </div>
